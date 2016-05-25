@@ -1,0 +1,64 @@
+allprojects {
+	repositories {
+		jcenter()
+		maven { url 'https://maven.fabric.io/public' }
+		maven { url "https://jitpack.io" }
+	}
+}
+
+ext {
+	//Android
+	androidBuildToolsVersion = "23.0.2"
+	androidMinSdkVersion = 16
+	androidTargetSdkVersion = 23
+	androidCompileSdkVersion = 23
+
+	//Support libraries
+	supportVersion = '23.1.1'
+	dep = [appCompat    : "com.android.support:appcompat-v7:${supportVersion}",
+		   cardView     : "com.android.support:cardview-v7:${supportVersion}",
+		   recyclerView : "com.android.support:recyclerview-v7:${supportVersion}",
+		   supportDesign: "com.android.support:design:${supportVersion}"]
+
+	//Dagger
+	daggerVersion = '2.0'
+	dep += [daggerCompiler: "com.google.dagger:dagger-compiler:${daggerVersion}",
+			dagger        : "com.google.dagger:dagger:${daggerVersion}"]
+
+	//Butterknife
+	butterKnifeVersion = '8.0.1'
+	dep += [butterKnifeCompiler: "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
+			butterKnife        : "com.jakewharton:butterknife:${butterKnifeVersion}"]
+
+	//Dexmaker
+	dexmakerVersion = '1.0'
+	dep += [dexmaker       : "com.google.dexmaker:dexmaker:${dexmakerVersion}",
+			dexmakerMockito: "com.google.dexmaker:dexmaker-mockito:${dexmakerVersion}"]
+
+	//Others
+	dep += [lombok            : "org.projectlombok:lombok:1.16.8",
+			facebook          : "com.facebook.android:facebook-android-sdk:4.11.0",
+			rxJava            : "io.reactivex:rxjava:1.1.5",
+			rxAndroid         : "io.reactivex:rxandroid:1.2.0",
+			javaxAnnotation   : "javax.annotation:jsr250-api:1.0",
+			ormlite           : "com.j256.ormlite:ormlite-android:4.48",
+			jodaTime          : "net.danlew:android.joda:2.9.3",
+			calligraphy       : "uk.co.chrisjenx:calligraphy:2.2.0",
+			rayMaterial       : "com.github.rey5137:material:1.2.2",
+			timber            : "com.jakewharton.timber:timber:4.1.0",
+			materialDialogs   : "com.github.afollestad.material-dialogs:core:0.8.5.9@aar",
+			mockito           : "org.mockito:mockito-core:1.9.5",
+			espresso          : "com.android.support.test.espresso:espresso-core:2.0",
+			testingSupportLib : "com.android.support.test:testing-support-lib:0.1",
+			okHttp            : "com.squareup.okhttp:okhttp:2.7.0",
+			gson              : "com.google.code.gson:gson:2.6.2",
+			androidAnnotations: "com.android.support:support-annotations:20.0.0",
+			junit             : "junit:junit:4.12",
+			assertj           : "org.assertj:assertj-core:1.7.1",
+			robolectric       : "org.robolectric:robolectric:3.0",
+			hrisey            : "pl.mg6.hrisey:hrisey:0.3.1",
+			multiDex          : 'com.android.support:multidex:1.0.0',
+			iconics           : "com.mikepenz:iconics-core:2.5.11@aar",
+			iconicsMaterial   : "com.mikepenz:google-material-typeface:2.2.0.1.original@aar",
+			iconicsCMaterial  : "com.mikepenz:community-material-typeface:1.5.54.1@aar"]
+}

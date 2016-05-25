@@ -1,0 +1,32 @@
+apply plugin: 'java'
+
+//noinspection GroovyUnusedAssignment
+sourceCompatibility = 1.7
+//noinspection GroovyUnusedAssignment
+targetCompatibility = 1.7
+
+configurations {
+	provided
+}
+
+sourceSets {
+	main {
+		compileClasspath += configurations.provided
+	}
+}
+
+dependencies {
+	def dep = rootProject.ext.dep
+
+	provided dep.daggerCompiler
+	provided dep.javaxAnnotation
+
+	compile dep.dagger
+	compile dep.rxJava
+
+	compile dep.lombok
+	provided dep.lombok
+
+	testCompile dep.junit
+	testCompile dep.mockito
+}
