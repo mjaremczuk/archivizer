@@ -1,8 +1,9 @@
 package pl.reveo.presentation.exception;
 
 import android.content.Context;
+
 import pl.reveo.data.exception.NetworkConnectionException;
-import pl.reveo.presentation.R;
+
 
 /**
  * Factory used to create error messages from an Exception as a condition.
@@ -22,10 +23,10 @@ public class ErrorMessageFactory {
 	 * @return {@link String} an error message.
 	 */
 	public static String create(Context context, Exception exception) {
-		String message = context.getString(R.string.exception_message_generic);
+		String message = "";//context.getString(R.string.exception_message_generic);
 
 		if (exception instanceof NetworkConnectionException) {
-			message = context.getString(R.string.exception_message_no_connection);
+			message ="No internet";// context.getString(R.string.exception_message_no_connection);
 		}
 
 		return message;

@@ -1,12 +1,14 @@
 package pl.reveo.presentation.internal.di.modules;
 
 import android.app.Activity;
-import pl.reveo.presentation.internal.di.PerActivity;
+
 import dagger.Module;
 import dagger.Provides;
+import pl.reveo.presentation.internal.di.PerActivity;
+
 
 /**
- * A module to wrap the Activity state and expose it to the graph.
+ * Activity module.
  */
 @Module
 public class ActivityModule {

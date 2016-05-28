@@ -1,16 +1,15 @@
 package pl.reveo.presentation.internal.di.components;
 
 import android.content.Context;
+
+import javax.inject.Singleton;
+
+import dagger.Component;
 import pl.reveo.domain.executor.PostExecutionThread;
 import pl.reveo.domain.executor.ThreadExecutor;
-import pl.reveo.domain.repository.TemplateRepository;
 import pl.reveo.presentation.internal.di.modules.ApplicationModule;
+import pl.reveo.presentation.navigation.Navigator;
 import pl.reveo.presentation.view.activity.DefaultActivity;
-import dagger.Component;
-import javax.inject.Singleton;
-import pl.reveo.domain.repository.PhotoRepository;
-import pl.reveo.domain.repository.UserRepository;
-import pl.reveo.domain.repository.MeetingRepository;
 
 
 /**
@@ -28,9 +27,6 @@ public interface ApplicationComponent {
 
 	PostExecutionThread postExecutionThread();
 
-	TemplateRepository templateRepository();
-  PhotoRepository photoRepository();
-  UserRepository userRepository();
-  MeetingRepository meetingRepository();
+	Navigator navigator();
 
 }

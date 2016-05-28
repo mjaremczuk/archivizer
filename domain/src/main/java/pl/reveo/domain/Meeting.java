@@ -1,5 +1,7 @@
 package pl.reveo.domain;
 
+import java.util.List;
+
 import lombok.Data;
 
 /**

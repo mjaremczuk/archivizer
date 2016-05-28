@@ -4,7 +4,7 @@
 		android:layout_height="match_parent"
 		android:layout_width="match_parent"
 		tools:context=".view.activity.MainActivity">
-	<.presentation.view.toolkit.ContainerView android:id="@+id/main_container_view"
+	<presentation.view.toolkit.ContainerView android:id="@+id/main_container_view"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent" />
 </RelativeLayout>

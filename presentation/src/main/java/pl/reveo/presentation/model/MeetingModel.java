@@ -1,6 +1,9 @@
 package pl.reveo.presentation.model;
 
 import android.os.Parcel;
+
+import java.util.List;
+
 import lombok.Data;
 
 /**

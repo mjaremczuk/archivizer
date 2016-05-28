@@ -1,6 +1,9 @@
 package pl.reveo.data.entity;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 import lombok.Data;
 
 /**

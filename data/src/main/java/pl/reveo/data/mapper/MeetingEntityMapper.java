@@ -21,7 +21,7 @@ public class MeetingEntityMapper extends CommonDataMapper<MeetingEntity, Meeting
       meetingEntity.setName(meeting.getName());
       meetingEntity.setLat(meeting.getLat());
       meetingEntity.setLng(meeting.getLng());
-      meetingEntity.setUsers(meeting.getUsers());
+//      meetingEntity.setUsers(meeting.getUsers());
       meetingEntity.setMeetingTime(meeting.getMeetingTime());
 
 		return meetingEntity;

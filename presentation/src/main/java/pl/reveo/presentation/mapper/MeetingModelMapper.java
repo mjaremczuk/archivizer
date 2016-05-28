@@ -20,7 +20,7 @@ public class MeetingModelMapper extends CommonDataMapper<MeetingModel, Meeting> 
 		meetingModel.setName(meeting.getName());
 		meetingModel.setLat(meeting.getLat());
 		meetingModel.setLng(meeting.getLng());
-		meetingModel.setUsers(meeting.getUsers());
+//		meetingModel.setUsers(meeting.getUsers());
 		meetingModel.setMeetingTime(meeting.getMeetingTime());
 
 		return meetingModel;

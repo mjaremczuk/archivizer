@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#42a5f5</color>
+    <color name="black">#00000000</color>
+    <color name="transparent">#7d3aa7d9</color>
+    <color name="custom_accent_material_light">#64b5f6</color>
+    <color name="custom_primary_material_light">#2196f3</color>
+    <color name="custom_primary_text_default_material_dark">#ffffff</color>
+    <color name="snackbar_background">#66000000</color>
+</resources>

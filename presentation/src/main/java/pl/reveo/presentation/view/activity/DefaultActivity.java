@@ -1,56 +1,97 @@
 package pl.reveo.presentation.view.activity;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
+import javax.inject.Inject;
+
+import butterknife.ButterKnife;
 import pl.reveo.presentation.AndroidApplication;
+import pl.reveo.presentation.R;
 import pl.reveo.presentation.internal.di.components.ApplicationComponent;
 import pl.reveo.presentation.internal.di.modules.ActivityModule;
 import pl.reveo.presentation.navigation.Navigator;
-import javax.inject.Inject;
 
-/**
- * Base {@link android.app.Activity} class for every Activity in this application.
- */
-public abstract class DefaultActivity extends Activity {
 
-	@Inject
-	Navigator navigator;
+public abstract class DefaultActivity extends AppCompatActivity {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		this.getApplicationComponent().inject(this);
-	}
+    @Inject
+    Navigator navigator;
+    View snackView;
 
-	/**
-	 * Adds a {@link Fragment} to this activity's layout.
-	 *
-	 * @param containerViewId The container view to where add the fragment.
-	 * @param fragment The fragment to be added.
-	 */
-	protected void addFragment(int containerViewId, Fragment fragment) {
-		FragmentTransaction fragmentTransaction = this.getFragmentManager().beginTransaction();
-		fragmentTransaction.add(containerViewId, fragment);
-		fragmentTransaction.commit();
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(layoutResource());
+        getApplicationComponent().inject(this);
+        ButterKnife.bind(this);
+        setUpActionBar();
+        readExtraData();
+    }
 
-	/**
-	 * Get the Main Application component for dependency injection.
-	 *
-	 * @return {@link ApplicationComponent}
-	 */
-	protected ApplicationComponent getApplicationComponent() {
-		return ((AndroidApplication) getApplication()).getApplicationComponent();
-	}
+    public abstract void setUpActionBar();
+    public abstract int layoutResource();
+    public abstract void readExtraData();
 
-	/**
-	 * Get an Activity module for dependency injection.
-	 *
-	 * @return {@link ActivityModule}
-	 */
-	protected ActivityModule getActivityModule() {
-		return new ActivityModule(this);
-	}
+    /**
+     * Get the Main Application component for dependency injection.
+     *
+     * @return {@link ApplicationComponent}
+     */
+    protected ApplicationComponent getApplicationComponent() {
+        return ((AndroidApplication) getApplication()).getApplicationComponent();
+    }
+
+    /**
+     * Get an Activity module for dependency injection.
+     *
+     * @return {@link ActivityModule}
+     */
+    public ActivityModule getActivityModule() {
+        return new ActivityModule(this);
+    }
+
+    /**
+     * Displays not ready yet.
+     */
+    public void notReadyYet() {
+        Toast.makeText(this, R.string.not_ready_yet, Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * Display snack bar with message
+     *
+     * @param message message to display
+     */
+    public void displayError(String message) {
+        if (snackView == null) {
+            ViewGroup viewGroup = ((ViewGroup) this.findViewById(android.R.id.content));
+            snackView =  viewGroup != null ? viewGroup.getChildAt(0) : null;
+        }
+        Snackbar snackbar = Snackbar.make(snackView, message, Snackbar.LENGTH_SHORT);
+        ViewGroup group = (ViewGroup) snackbar.getView();
+        group.setBackgroundResource(R.color.snackbar_background);
+        snackbar.show();
+    }
+
+    /**
+     * Display snack bar with message and custom background color
+     *
+     * @param message message to display
+     * @param colorResource background color resource
+     */
+    public void displayMessage(String message, int colorResource) {
+        if (snackView == null) {
+            ViewGroup viewGroup = ((ViewGroup) this.findViewById(android.R.id.content));
+            snackView = viewGroup != null ? viewGroup.getChildAt(0) : null;
+        }
+        Snackbar snackbar = Snackbar.make(snackView, message, Snackbar.LENGTH_SHORT);
+        ViewGroup group = (ViewGroup) snackbar.getView();
+        group.setBackgroundResource(colorResource);
+        snackbar.show();
+    }
 }
