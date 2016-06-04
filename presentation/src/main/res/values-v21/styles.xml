@@ -3,7 +3,7 @@
 
     <style name="CustomTheme" parent="AppTheme">
         <item name="android:navigationBarColor">@color/transparent</item>
-        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:statusBarColor">@color/custom_primary_material_light</item>
         <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:colorAccent">@color/custom_accent_material_light</item>
         <item name="android:colorPrimary">@color/custom_primary_material_light</item>

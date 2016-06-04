@@ -28,6 +28,7 @@ public abstract class DefaultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(layoutResource());
         getApplicationComponent().inject(this);
+        initializeInjector();
         ButterKnife.bind(this);
         setUpActionBar();
         readExtraData();
@@ -36,6 +37,7 @@ public abstract class DefaultActivity extends AppCompatActivity {
     public abstract void setUpActionBar();
     public abstract int layoutResource();
     public abstract void readExtraData();
+    public abstract void initializeInjector();
 
     /**
      * Get the Main Application component for dependency injection.

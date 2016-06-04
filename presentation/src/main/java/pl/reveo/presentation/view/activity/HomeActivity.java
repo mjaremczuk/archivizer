@@ -1,7 +1,6 @@
 package pl.reveo.presentation.view.activity;
 
 import android.Manifest;
-import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,38 +11,42 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 import pl.reveo.presentation.R;
+import pl.reveo.presentation.internal.di.components.DaggerHomeComponent;
+import pl.reveo.presentation.internal.di.modules.HomeModule;
 import pl.reveo.presentation.presenter.HomePresenter;
 import pl.reveo.presentation.view.HomeDataView;
 import pl.reveo.presentation.view.adapter.ContactAdapter;
 import pl.reveo.presentation.view.toolkit.RecyclerItemClickListener;
 
-
 @RuntimePermissions
-public class HomeActivity extends DefaultActivity implements HomeDataView, RecyclerItemClickListener.OnItemClickListener {
+public class HomeActivity extends DefaultActivity
+        implements HomeDataView, RecyclerItemClickListener.OnItemClickListener {
 
     private static final String TAG = HomeActivity.class.getName();
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerView;
-    HomePresenter presenter;
-    ContactAdapter adapter;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.recyclerview) RecyclerView recyclerView;
+    @Inject HomePresenter presenter;
+    @Inject ContactAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        adapter = new ContactAdapter(null);
+        initializeRecyclerView();
+        HomeActivityPermissionsDispatcher.getContactsWithCheck(this);
+    }
+
+    private void initializeRecyclerView(){
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,this));
-        presenter = new HomePresenter();
-        HomeActivityPermissionsDispatcher.getContactsWithCheck(this);
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, this));
     }
 
     @Override
@@ -62,14 +65,20 @@ public class HomeActivity extends DefaultActivity implements HomeDataView, Recyc
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        HomeActivityPermissionsDispatcher.onRequestPermissionsResult(HomeActivity.this,requestCode,grantResults);
+    public void initializeInjector() {
+        DaggerHomeComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .homeModule(new HomeModule())
+                .build()
+                .inject(this);
     }
 
     @Override
-    public Context context() {
-        return this;
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        HomeActivityPermissionsDispatcher.onRequestPermissionsResult(HomeActivity.this, requestCode, grantResults);
     }
 
     @Override
@@ -77,12 +86,12 @@ public class HomeActivity extends DefaultActivity implements HomeDataView, Recyc
         adapter.changeCursor(data);
     }
 
-    @NeedsPermission({Manifest.permission.READ_CONTACTS,Manifest.permission.READ_SMS})
+    @NeedsPermission({ Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS })
     public void getContacts() {
-        presenter.initialize(this, getSupportLoaderManager());
+        presenter.initialize(this);
     }
 
-    @OnShowRationale({Manifest.permission.READ_CONTACTS,Manifest.permission.READ_SMS})
+    @OnShowRationale({ Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS })
     public void showRationale(PermissionRequest request) {
         new AlertDialog.Builder(this)
                 .setMessage("Application require permission")
@@ -94,7 +103,7 @@ public class HomeActivity extends DefaultActivity implements HomeDataView, Recyc
     @Override
     public void onItemClick(View view, int position) {
         String lookupKey = adapter.getItemLookupKey(position);
-        Log.d(TAG, "onItemClick: lookupkey:"+ lookupKey);
-        navigator.navigateToContactDetails(HomeActivity.this,lookupKey);
+        Log.d(TAG, "onItemClick: lookupkey:" + lookupKey);
+        navigator.navigateToContactDetails(HomeActivity.this, lookupKey);
     }
 }

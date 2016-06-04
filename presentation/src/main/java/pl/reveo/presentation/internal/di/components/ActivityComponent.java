@@ -16,11 +16,12 @@
 package pl.reveo.presentation.internal.di.components;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.support.v4.app.LoaderManager;
 
 import dagger.Component;
 import pl.reveo.presentation.internal.di.PerActivity;
 import pl.reveo.presentation.internal.di.modules.ActivityModule;
-
 
 /**
  * Activity component.
@@ -28,6 +29,10 @@ import pl.reveo.presentation.internal.di.modules.ActivityModule;
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
 public interface ActivityComponent {
-	//Exposed to sub-graphs.
-	Activity activity();
+    //Exposed to sub-graphs.
+    Activity activity();
+
+    ContentResolver contentResolver();
+
+    LoaderManager loaderManager();
 }

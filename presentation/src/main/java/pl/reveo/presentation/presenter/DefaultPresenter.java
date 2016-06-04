@@ -1,5 +1,6 @@
 package pl.reveo.presentation.presenter;
 
+import android.content.Context;
 import android.support.annotation.CallSuper;
 
 import javax.inject.Inject;
@@ -12,28 +13,32 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 /**
- *Default presenter implementation
+ * Default presenter implementation
  */
 public abstract class DefaultPresenter<D> implements Presenter<D> {
 
     D dataView;
     protected CompositeSubscription compositeSubscription = new CompositeSubscription();
-    @Inject
-    PostExecutionThread postExecutionThread;
-    @Inject
-    ThreadExecutor threadExecutor;
+    @Inject PostExecutionThread postExecutionThread;
+    @Inject ThreadExecutor threadExecutor;
+    private final Context context;
 
-
-    public DefaultPresenter(){
-
+    public DefaultPresenter(Context context) {
+        this.context = context;
     }
 
+    public Context getContext() {
+        return context;
+    }
+
+    public D getDataView() {
+        return dataView;
+    }
 
     @Override
     public void resume() {
 
     }
-
 
     @Override
     public void destroy() {
@@ -46,7 +51,7 @@ public abstract class DefaultPresenter<D> implements Presenter<D> {
         this.dataView = d;
     }
 
-    public void subscribeObserveAndRegisterSubscriber(Observable observable, Subscriber subscriber){
+    public void subscribeObserveAndRegisterSubscriber(Observable observable, Subscriber subscriber) {
         observable.subscribeOn(Schedulers.from(threadExecutor))
                 .observeOn(postExecutionThread.getScheduler());
         compositeSubscription.add(observable.subscribe(subscriber));
